@@ -1,0 +1,13 @@
+RSAPrivateKey ::= SEQUENCE {
+	version		Version,
+	modulus		INTEGER ({ rsa_get_n }),	-- n
+	publicExponent	INTEGER ({ rsa_get_e }),	-- e
+	privateExponent	INTEGER ({ rsa_get_d }),	-- d
+	prime1		INTEGER,			-- p
+	prime2		INTEGER,			-- q
+	exponent1	INTEGER,			-- d mod (p-1)
+	exponent2	INTEGER,			-- d mod (q-1)
+	coefficient	INTEGER				-- (inverse of q) mod p
+}
+
+Version ::= INTEGER

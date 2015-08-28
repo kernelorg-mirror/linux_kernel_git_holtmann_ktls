@@ -15,7 +15,8 @@
 #include <linux/err.h>
 #include <linux/fips.h>
 #include <crypto/internal/rsa.h>
-#include "rsakey-asn1.h"
+#include "rsapublickey-asn1.h"
+#include "rsaprivatekey-asn1.h"
 
 int rsa_get_n(void *context, size_t hdrlen, unsigned char tag,
 	      const void *value, size_t vlen)
@@ -109,9 +110,13 @@ int rsa_parse_key(struct rsa_key *rsa_key, const void *key,
 	int ret;
 
 	free_mpis(rsa_key);
-	ret = asn1_ber_decoder(&rsakey_decoder, rsa_key, key, key_len);
-	if (ret < 0)
-		goto error;
+	ret = asn1_ber_decoder(&rsapublickey_decoder, rsa_key, key, key_len);
+	if (ret < 0) {
+		ret = asn1_ber_decoder(&rsaprivatekey_decoder, rsa_key,
+				       key, key_len);
+		if (ret < 0)
+			goto error;
+	}
 
 	return 0;
 error:

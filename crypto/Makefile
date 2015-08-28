@@ -31,10 +31,13 @@ obj-$(CONFIG_CRYPTO_HASH2) += crypto_hash.o
 obj-$(CONFIG_CRYPTO_PCOMP2) += pcompress.o
 obj-$(CONFIG_CRYPTO_AKCIPHER2) += akcipher.o
 
-$(obj)/rsakey-asn1.o: $(obj)/rsakey-asn1.c $(obj)/rsakey-asn1.h
-clean-files += rsakey-asn1.c rsakey-asn1.h
+$(obj)/rsapublickey-asn1.o: $(obj)/rsapublickey-asn1.c $(obj)/rsapublickey-asn1.h
+clean-files += rsapublickey-asn1.c rsapublickey-asn1.h
 
-rsa_generic-y := rsakey-asn1.o
+$(obj)/rsaprivatekey-asn1.o: $(obj)/rsaprivatekey-asn1.c $(obj)/rsaprivatekey-asn1.h
+clean-files += rsaprivatekey-asn1.c rsaprivatekey-asn1.h
+
+rsa_generic-y := rsapublickey-asn1.o rsaprivatekey-asn1.o
 rsa_generic-y += rsa.o
 rsa_generic-y += rsa_helper.o
 obj-$(CONFIG_CRYPTO_RSA) += rsa_generic.o
